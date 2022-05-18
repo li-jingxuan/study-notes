@@ -121,6 +121,10 @@ RUN apt-get install -y mysql-server="${MYSQL_VERSION}" \
 ```
 
 VOLUME 和 EXPOSE：存储 和 网络
+EXPOSE: 暴露一个端口
+```sh
+EXPOSE 5000
+```
 
 CMD 和 ENTRYPOINT
 CMD 关键字：
@@ -128,10 +132,24 @@ CMD 关键字：
   2. 如果 docker run 指定了其他命令，CMD 命令会被忽略
   3. 如果定义了多个CMD，只有最后一个 CMD 会被执行
 
-ENTRYPOINT 关键字：设置容器启动时运行的命令 
+ENTRYPOINT 关键字：设置容器启动时运行的命令 ·
   1. 让容器以应用程序或者服务的形式运行
   2. 不会被忽略，一定会被执行
 
 
 ## 发布Docker Image
+
+## Dockerfile 实战
+```sh
+# 继承 python3.6 image
+FROM python3.6
+# 执行安装 flask 命令
+RUN pip install flask
+# 将 ./app.py 复制到 /app/app.py （注意 /app/ 不能写成 /app，否则意思为：将 ./app.py 复制到 / 的 app 文件中）
+COPY app.py /app/
+# 更改工作目录到 /app/
+WORKDIR /app
+# 执行 python app.py 命令，等同于：CMD python app.py
+CMD ["python", "app.py"]
+```
   
